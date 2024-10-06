@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2580243486776307957}
   - component: {fileID: 4938829788703586589}
   - component: {fileID: 5494021035922483436}
+  - component: {fileID: 1710100344287320778}
   m_Layer: 0
   m_Name: Portal background
   m_TagString: Untagged
@@ -107,3 +108,16 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &1710100344287320778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6759450636290425409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9522b762bf61b7841a10f4b4271ac827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeDuration: 2
