@@ -408,7 +408,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vfx: {fileID: 816069088}
-  maxRadius: 1.5
 --- !u!4 &769105261
 Transform:
   m_ObjectHideFlags: 0
@@ -463,10 +462,10 @@ VisualEffect:
       m_Array:
       - m_Value: 1.5
         m_Name: TorusSource 1_majorRadius
-        m_Overridden: 1
+        m_Overridden: 0
       - m_Value: 0
         m_Name: TorusSource 1_minorRadius
-        m_Overridden: 1
+        m_Overridden: 0
       - m_Value: 6.28
         m_Name: TorusSource 1_arc
         m_Overridden: 0
