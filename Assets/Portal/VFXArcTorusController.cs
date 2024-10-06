@@ -83,8 +83,12 @@ public class VFXArcController : MonoBehaviour
             // Spawn prefabs only if the portal has been active for more than 4 seconds
             if (elapsedTime >= 4f && isFullyFormed && spawnedPrefabs.Count == 0)
             {
-                // Instantiate the current prefab and add it to the list
-                GameObject spawnedPrefab = Instantiate(portalPrefabs[currentPrefabIndex], transform.position, transform.rotation);
+                // Adjust position and rotation
+                Vector3 adjustedPosition = transform.position + new Vector3(0, 0, 0);
+                Quaternion adjustedRotation = Quaternion.Euler(0, 90, 90);
+
+                // Instantiate the current prefab with adjusted position and rotation
+                GameObject spawnedPrefab = Instantiate(portalPrefabs[currentPrefabIndex], adjustedPosition, adjustedRotation);
                 spawnedPrefabs.Add(spawnedPrefab);
 
                 // Update the prefab index for the next cycle
