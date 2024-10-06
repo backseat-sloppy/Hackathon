@@ -11,38 +11,30 @@ public class VFXArcController : MonoBehaviour
     private float maxArcRadians = Mathf.PI * 2; // Max arc value (2π radians for full circle)
     private float timeToFullArc = 3f; // Time to reach full arc (in seconds)
     private float initialSpawnRate = 0f; // Initial spawn rate (0 = no particles emitted)
-   
+
     private float elapsedTime; // Elapsed time since the start of the duration
     private Coroutine spawnCoroutine; // Reference to the running coroutine
-
 
     void Start()
     {
         // Set the arc and spawn rate to 0 initially (no particles emitted)
         vfx.SetFloat(arcParameter, 0f);
         vfx.SetInt(spawnRateParameter, (int)initialSpawnRate); // Set spawn rate to 0 at start
-
-
     }
 
-    void Update()
+    // New method to trigger the portal based on concentration level
+    public void TriggerPortal(bool isConcentrating)
     {
-        // Check if spacebar is pressed
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isConcentrating && spawnCoroutine == null)
         {
-            // Start the coroutine to handle the arc and spawn rate increase
+            // If concentrating, start the portal effect
             spawnCoroutine = StartCoroutine(PortalMaking());
         }
-
-        // Check if spacebar is released
-        if (Input.GetKeyUp(KeyCode.Space))
+        else if (!isConcentrating && spawnCoroutine != null)
         {
-            // Stop the coroutine
-            if (spawnCoroutine != null)
-            {
-                StopCoroutine(spawnCoroutine);
-                spawnCoroutine = null;
-            }
+            // If no longer concentrating, stop the portal effect
+            StopCoroutine(spawnCoroutine);
+            spawnCoroutine = null;
 
             // Reset arc value and spawn rate
             arcValue = 0;
@@ -50,17 +42,6 @@ public class VFXArcController : MonoBehaviour
             vfx.SetInt(spawnRateParameter, (int)initialSpawnRate); // Set spawn rate to 0 (stop emission)
             elapsedTime = 0f; // Reset elapsed time
         }
-    }
-    
-    void Radius()
-    {
-      // this method will change the scale transform of the gameobject to lerp between 0 and 1.5 over the course of timetoFullArc
-      // this will give the effect of the portal opening and closing
-  
-        float t = elapsedTime / timeToFullArc;
-        float radius = Mathf.Lerp(0f, 1f, t);
-        transform.localScale = new Vector3(radius, radius, radius);
-
     }
 
     public IEnumerator PortalMaking()
@@ -79,6 +60,14 @@ public class VFXArcController : MonoBehaviour
             // Wait for the next frame
             yield return null;
         }
+    }
+
+    void Radius()
+    {
+        // Lerp between 0 and 1 over the course of timeToFullArc
+        float t = elapsedTime / timeToFullArc;
+        float radius = Mathf.Lerp(0f, 1f, t);
+        transform.localScale = new Vector3(radius, radius, radius);
     }
 
     void ArcIncrease()
@@ -112,7 +101,5 @@ public class VFXArcController : MonoBehaviour
         {
             vfx.SetInt(spawnRateParameter, 5);
         }
-
-        
     }
 }
