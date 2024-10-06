@@ -11,11 +11,14 @@ public class VFXArcController : MonoBehaviour
     private float maxArcRadians = Mathf.PI * 2; // Max arc value (2π radians for full circle)
     private float timeToFullArc = 5f; // Time to reach full arc (in seconds)
     private float initialSpawnRate = 0f; // Initial spawn rate (0 = no particles emitted)
-    public string majorRadiusParameter = "MajorRadius";
-    public string minorRadiusParameter = "MinorRadius";
+    public string majorRadiusParameter = "majorRadius";
+    public string minorRadiusParameter = "minorRadius";
     private float elapsedTime; // Elapsed time since the start of the duration
     private Coroutine spawnCoroutine; // Reference to the running coroutine
-
+    private float majorRadius;
+    private float minorRadius;
+    public float maxRadius = 1.5f;
+    S
     void Start()
     {
         // Set the arc and spawn rate to 0 initially (no particles emitted)
@@ -32,8 +35,9 @@ public class VFXArcController : MonoBehaviour
         {
             // Start the coroutine to handle the arc and spawn rate increase
             spawnCoroutine = StartCoroutine(PortalMaking());
+            
         }
-
+        // WILIAM ER GAY
         // Check if spacebar is released
         if (Input.GetKeyUp(KeyCode.Space))
         {
@@ -54,6 +58,11 @@ public class VFXArcController : MonoBehaviour
 
     void RadiusAndBlur()
     {
+        // gradually change the major radius value over time (from 0 to maxRadius)
+        majorRadius += (maxRadius / timeToFullArc) * Time.deltaTime;
+        majorRadius = Mathf.Clamp(majorRadius, 0, maxRadius);
+
+       vfx.SetFloat(majorRadiusParameter, 0f);
 
     }
 
@@ -62,10 +71,13 @@ public class VFXArcController : MonoBehaviour
         while (true)
         {
             // Increase arc value
-              ArcIncrease();
+            ArcIncrease();
 
             // Increase spawn rate
             IncreaseSpawnRate();
+
+            // Increase major radius and blur
+            RadiusAndBlur();
 
             // Wait for the next frame
             yield return null;
